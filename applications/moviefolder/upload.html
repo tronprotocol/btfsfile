@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" >
+    <title>BTFS-Movie</title>
+    <link rel="stylesheet" type="text/css" href="app.css">
+</head>
+<body>
+<nav>
+    <div class="nav-links">
+        <a id="community-rules">Community Rules</a>
+        <a id="privacy-policy">Privacy Policy</a>
+        <a id="terms-of-service">Terms of Service</a>
+    </div>
+    <div id="admin-header" class="">
+        <h1 id="title"><img id="logo" src="imgs/tron.svg" >BTFS MOVIE</h1>
+    </div>
+    <div id="signin" class="pointer">
+        <p id="ownerName"><img src="imgs/user.svg" class="icon">Admin</p>
+    </div>
+    <div id="admin-nav">
+        <ul>
+            <li id="admin-profile">My Profile</li>
+            <li id="admin-download">Download Movie</li>
+            <li id="admin-upload">Upload Movie</li>
+        </ul>
+    </div>
+</nav>
+
+<div id="upload-divider">
+    <p> Upload <p>
+    <div class="line"></div>
+</div>
+<div id="main-container" class="main-container-upload flex-center">
+    <div>
+    <form name="uploadForm" action="/">
+        <div>File Path*<span style="font-size:16px;"> (.torrent)</span> </div>
+        <input type="file" name="movie" id="movie">
+        <div class="browse-input"><span id="movie-input" ></span><div class="browse-btn pointer hover-button2" id="movie-browse">browse</div> </div>
+        <div>Movie Poster*<span style="font-size:16px;"> (.jpq, .jpeg, .png)</span> </div>
+        <input type="file" name="cover" id="cover">
+        <div class="browse-input"><span id="cover-input" ></span><div class="browse-btn pointer hover-button2" id="cover-browse">browse</div></div>
+        <div>Title*<span></span> </div><input type="text" name="upload_name" id="uploadName">
+        <div>Keywords</div><input type="text" name="upload_keywords" id="uploadKeywords">
+        <button type="button" id="upload-btn" class="upload-btn hover-button2" >Upload</button>
+        <a id="url"></a>
+    </form>
+    </div>
+</div>
+
+<div id="popup-container" class="flex-center" style="display:flex;">
+    <div id="popup">
+    </div>
+    <div id="popup-signin">
+        <div id="popup-signin-content">
+            SIGN IN TO TRON LINK TO CONTINUE
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="app.js?2019.07.29.v1"> </script>
+
+</body>
+</html>

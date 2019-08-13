@@ -1,0 +1,8 @@
+{
+	"contractAddr" : "TPHtow3ZP77yaHKzQKSKn6GHLAXHPGtp5D",
+	"defaultUserAddr" :"TNNz2S2wzPxvokEWAiT3gE48RFuhnaPYEy",
+	"nodeURL" : "https://api.trongrid.io",
+	"hostIpAddr" : "api.btfssoter.io",
+	"tipConversion" : "0.8",
+	"baseURL" : "https://gateway.btfssoter.io./btfs/"
+}
