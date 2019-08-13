@@ -16,15 +16,15 @@ Requirements:
 * tronweb
 * browserify - `$ browserify source.js -o app.js`
 
-# Launching a BTFS Daemon
+## Launching a BTFS Daemon
 
 You can launch the BTFS daemon on either your local machine or on a server. In the end, the DApp files will be pinned to the BTFS network. To install and deploy BTFS, follow the [BTFS Installation](https://docs.btfs.io/docs/install-btfs) instructions from the [developer documentation](https://docs.btfs.io/). 
 
-# Smart Contract Deployment to TRON
+## Smart Contract Deployment to TRON
 
 Smart contract deployment can be achieved via [Tron-Box](https://developers.tron.network/docs/tron-box-contract-deployment). 
 
-# Update the DApp Variable Config File
+## Update the DApp Variable Config File
 
 In the `vars.json` configuration file, update the `contractAddr` field to your deployed contract address. Update the baseURL to the BTFS gateway and the hostIpAddr to the API gateway.     
 
@@ -39,7 +39,7 @@ In the `vars.json` configuration file, update the `contractAddr` field to your d
 }
 ```
 
-# Upload the DApp to BTFS
+## Upload the DApp to BTFS
 
 Upload the DApp directory to BTFS using the `btfs add -r` command: 
 
@@ -64,7 +64,7 @@ added QmYw7aKqffvi9eArbX5SBZ5W6HRVqm82Mu6k6Eh6aoG9fx appfolder
  
 ```
 
-# Pin the DApp
+## Pin the DApp
 
 Run the `btfs name publish <hash>` where <hash> represents the hash value of the uploaded directory:
 
