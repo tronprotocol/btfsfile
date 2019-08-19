@@ -1,5 +1,5 @@
 {
-  "name": "btfs-movie",
+  "name": "btfs-video",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -20,12 +20,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bittorrent/btfs-movie.git"
+    "url": "git+https://github.com/bittorrent/btfs-video.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bittorrent/btfs-movie/issues"
+    "url": "https://github.com/bittorrent/btfs-video/issues"
   },
-  "homepage": "https://github.com/bittorrent/btfs-movie#readme"
+  "homepage": "https://github.com/bittorrent/btfs-video#readme"
 }

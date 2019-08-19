@@ -1,60 +1,60 @@
 const ipAddr = "api.btfs.trongrid.io";
 const ipPort = "443";
 const timeout = 1000;
-const contractAddr = "TBVVv1768bBtQFhsQ7wHqa9Pbmh4CU3BhZ";
+const contractAddr = "TMFoVTsfJfJpJ9WhBGz1d5VMCW6C2cJNgp";
 const toSun = 1000000;
 
-async function movieInfoSection(movieHash, coverHash, name, thumbsUp, thumbsDown, uploader, trxTip, tokenTip, keywords, contract) {
+async function videoInfoSection(videoHash, coverHash, name, thumbsUp, thumbsDown, uploader, trxTip, tokenTip, keywords, contract) {
     if (contract == null) {
         contract = await window.tronWeb.contract().at(contractAddr);
     }
 
-    // each div contains an movie hash and its details.
+    // each div contains an video hash and its details.
     var div = document.createElement("div");
-    div.setAttribute("id", movieHash);
+    div.setAttribute("id", videoHash);
     document.getElementById("search_result").appendChild(div);
 
-    // append movie cover
+    // append video cover
     var cover = document.createElement("img");
     console.log("https://gateway.btfs.trongrid.io/btfs/"+coverHash);
     cover.setAttribute("src",  "https://gateway.btfs.trongrid.io/btfs/"+coverHash);
     cover.setAttribute("width", 450);
-    document.getElementById(movieHash).appendChild(cover);
+    document.getElementById(videoHash).appendChild(cover);
 
-    // append movie name and hash
+    // append video name and hash
     var hash = document.createElement("section");
-    hash.setAttribute("id",  "hash_"+movieHash);
-    hash.setAttribute("value", movieHash);
-    hash.innerHTML = "Name:["+name+"] Hash:["+movieHash+"]";
-    document.getElementById(movieHash).appendChild(hash);
+    hash.setAttribute("id",  "hash_"+videoHash);
+    hash.setAttribute("value", videoHash);
+    hash.innerHTML = "Name:["+name+"] Hash:["+videoHash+"]";
+    document.getElementById(videoHash).appendChild(hash);
 
     // append keywords
     var keyword = document.createElement("section");
-    keyword.setAttribute("id", "keywords_"+movieHash);
-    keyword.setAttribute("value", movieHash);
+    keyword.setAttribute("id", "keywords_"+videoHash);
+    keyword.setAttribute("value", videoHash);
     keyword.innerHTML = "Keywords:["+keywords+"]";
-    document.getElementById(movieHash).appendChild(keyword);
+    document.getElementById(videoHash).appendChild(keyword);
 
     // add click listener to hash.
     hash.addEventListener("click", async function () {
         console.log("click hash to watcher:", this.value);
-        watch(movieHash);
+        watch(videoHash);
     }, false);
 
     // =========== thumbUp =============
     // append thumb up number.
     var thumbsUpNum = document.createElement("section");
-    thumbsUpNum.setAttribute("id", "thumbsUp_num_"+movieHash);
+    thumbsUpNum.setAttribute("id", "thumbsUp_num_"+videoHash);
     thumbsUpNum.innerHTML = thumbsUp;
-    document.getElementById(movieHash).appendChild(thumbsUpNum);
+    document.getElementById(videoHash).appendChild(thumbsUpNum);
 
     // thumb up button.
     var thumbsUpBtn = document.createElement("button");
-    thumbsUpBtn.setAttribute("id", "thumbsUp_btn_"+movieHash);
-    thumbsUpBtn.setAttribute("name", "thumbsUp_"+movieHash);
-    thumbsUpBtn.setAttribute("value", movieHash);
+    thumbsUpBtn.setAttribute("id", "thumbsUp_btn_"+videoHash);
+    thumbsUpBtn.setAttribute("name", "thumbsUp_"+videoHash);
+    thumbsUpBtn.setAttribute("value", videoHash);
     thumbsUpBtn.innerHTML = "Thumbs Up";
-    document.getElementById("thumbsUp_num_"+movieHash).appendChild(thumbsUpBtn);
+    document.getElementById("thumbsUp_num_"+videoHash).appendChild(thumbsUpBtn);
 
     // add click event listener to thumb up button.
     thumbsUpBtn.addEventListener("click", async function () {
@@ -63,7 +63,7 @@ async function movieInfoSection(movieHash, coverHash, name, thumbsUp, thumbsDown
             shouldPollResponse: true
         });
         setTimeout(function () {
-            document.getElementById("thumbsUp_num_"+movieHash).innerHTML = ret.toString();
+            document.getElementById("thumbsUp_num_"+videoHash).innerHTML = ret.toString();
         }, timeout);
         console.log("likes-uploaded:", ret.toString());
     }, false);
@@ -71,17 +71,17 @@ async function movieInfoSection(movieHash, coverHash, name, thumbsUp, thumbsDown
     // =========== thumbDown =============
     // append thumb down number.
     var thumbsDownNum = document.createElement("section");
-    thumbsDownNum.setAttribute("id", "thumbsDown_num_"+movieHash);
+    thumbsDownNum.setAttribute("id", "thumbsDown_num_"+videoHash);
     thumbsDownNum.innerHTML = thumbsDown;
-    document.getElementById(movieHash).appendChild(thumbsDownNum);
+    document.getElementById(videoHash).appendChild(thumbsDownNum);
 
     // thumb down button.
     var thumbsDownBtn = document.createElement("button");
-    thumbsDownBtn.setAttribute("id", "thumbsDown_btn_"+movieHash);
-    thumbsDownBtn.setAttribute("name", "thumbsDown_"+movieHash);
-    thumbsDownBtn.setAttribute("value", movieHash);
+    thumbsDownBtn.setAttribute("id", "thumbsDown_btn_"+videoHash);
+    thumbsDownBtn.setAttribute("name", "thumbsDown_"+videoHash);
+    thumbsDownBtn.setAttribute("value", videoHash);
     thumbsDownBtn.innerHTML = "Thumbs Down";
-    document.getElementById("thumbsDown_num_"+movieHash).appendChild(thumbsDownBtn);
+    document.getElementById("thumbsDown_num_"+videoHash).appendChild(thumbsDownBtn);
 
     // add click event listener to thumb up button.
     thumbsDownBtn.addEventListener("click", async function () {
@@ -89,27 +89,27 @@ async function movieInfoSection(movieHash, coverHash, name, thumbsUp, thumbsDown
         let dislikes = await contract.thumbsDown(this.value).send({
             shouldPollResponse: true
         });
-        setTimeout(document.getElementById("thumbsDown_num_"+movieHash).innerHTML = dislikes.toString(), timeout);
+        setTimeout(document.getElementById("thumbsDown_num_"+videoHash).innerHTML = dislikes.toString(), timeout);
         console.log("dislikes-uploaded:", dislikes.toString());
     }, false);
 
     // =========== tip TRX ============
     // 1. tips section
     var trxTips = document.createElement("section");
-    trxTips.setAttribute("id", "trx_tips_" + movieHash);
-    document.getElementById(movieHash).appendChild(trxTips);
+    trxTips.setAttribute("id", "trx_tips_" + videoHash);
+    document.getElementById(videoHash).appendChild(trxTips);
     // 2. tips Button
     var trxTipsBtn = document.createElement("button");
-    trxTipsBtn.setAttribute("id", "trx_tips_btn_" + movieHash);
-    trxTipsBtn.setAttribute("name", "movieHash");
-    trxTipsBtn.setAttribute("value", movieHash);
+    trxTipsBtn.setAttribute("id", "trx_tips_btn_" + videoHash);
+    trxTipsBtn.setAttribute("name", "videoHash");
+    trxTipsBtn.setAttribute("value", videoHash);
     trxTipsBtn.innerHTML = "Tips TRX";
-    document.getElementById("trx_tips_" + movieHash).appendChild(trxTipsBtn);
+    document.getElementById("trx_tips_" + videoHash).appendChild(trxTipsBtn);
     // 3. tips label
     var trxTipsLbl = document.createElement("label");
-    trxTipsLbl.setAttribute("id", "trx_tips_lbl_" + movieHash);
+    trxTipsLbl.setAttribute("id", "trx_tips_lbl_" + videoHash);
     setTimeout(trxTipsLbl.innerHTML = trxTip / toSun, timeout);
-    document.getElementById("trx_tips_" + movieHash).appendChild(trxTipsLbl);
+    document.getElementById("trx_tips_" + videoHash).appendChild(trxTipsLbl);
     // 4. add click event listener to tips Button
     trxTipsBtn.addEventListener("click", async function() {
         console.log("click TRX tips Button:", this.value);
@@ -119,30 +119,30 @@ async function movieInfoSection(movieHash, coverHash, name, thumbsUp, thumbsDown
                 callValue: trxTipsAmountEntered * toSun,
                 shouldPollResponse: true
             });
-            setTimeout(document.getElementById("trx_tips_lbl_" + movieHash).innerHTML = tips.toNumber() / toSun, timeout);
+            setTimeout(document.getElementById("trx_tips_lbl_" + videoHash).innerHTML = tips.toNumber() / toSun, timeout);
             console.log("trx-tips-updated:", tips.toNumber() / toSun);
         }
     }, false);
     // =========== end of tip TRX ============
 
     // =========== tip Token =============
-    // tip tokenmovie
+    // tip tokenvideo
     // 1. tip token section
     var tokenTips = document.createElement("section");
-    tokenTips.setAttribute("id", "token_tips_" + movieHash);
-    document.getElementById(movieHash).appendChild(tokenTips);
+    tokenTips.setAttribute("id", "token_tips_" + videoHash);
+    document.getElementById(videoHash).appendChild(tokenTips);
     // 2. tiptoken Button
     var tokenTipsBtn = document.createElement("button");
-    tokenTipsBtn.setAttribute("id", "token_tips_btn_" + movieHash);
-    tokenTipsBtn.setAttribute("name", "movieHash");
-    tokenTipsBtn.setAttribute("value", movieHash);
+    tokenTipsBtn.setAttribute("id", "token_tips_btn_" + videoHash);
+    tokenTipsBtn.setAttribute("name", "videoHash");
+    tokenTipsBtn.setAttribute("value", videoHash);
     tokenTipsBtn.innerHTML = "Tips Token";
-    document.getElementById("token_tips_" + movieHash).appendChild(tokenTipsBtn);
+    document.getElementById("token_tips_" + videoHash).appendChild(tokenTipsBtn);
     // 3. tiptoken label
     var tokenTipsLbl = document.createElement("label");
-    tokenTipsLbl.setAttribute("id", "token_tips_lbl_" + movieHash);
+    tokenTipsLbl.setAttribute("id", "token_tips_lbl_" + videoHash);
     setTimeout(tokenTipsLbl.innerHTML = tokenTip, timeout);
-    document.getElementById("token_tips_" + movieHash).appendChild(tokenTipsLbl);
+    document.getElementById("token_tips_" + videoHash).appendChild(tokenTipsLbl);
     // 4. add click event listener to tip Button
     tokenTipsBtn.addEventListener("click", async function() {
         console.log("click tip token Button:", this.value);
@@ -154,7 +154,7 @@ async function movieInfoSection(movieHash, coverHash, name, thumbsUp, thumbsDown
                 tokenId: tokenId,
                 shouldPollResponse: true
             });
-            setTimeout(document.getElementById("token_tips_lbl_" + movieHash).innerHTML = tips.toString(), timeout);
+            setTimeout(document.getElementById("token_tips_lbl_" + videoHash).innerHTML = tips.toString(), timeout);
             console.log("token-tips-updated:", tips.toString());
         }
     }, false);
@@ -162,15 +162,15 @@ async function movieInfoSection(movieHash, coverHash, name, thumbsUp, thumbsDown
 
     // uploader label.
     var uploaderLabel = document.createElement("uploader");
-    uploaderLabel.setAttribute("id", "uploader_"+movieHash);
-    uploaderLabel.setAttribute("value", movieHash);
+    uploaderLabel.setAttribute("id", "uploader_"+videoHash);
+    uploaderLabel.setAttribute("value", videoHash);
     uploaderLabel.innerHTML = uploader;
-    document.getElementById(movieHash).appendChild(uploaderLabel);
+    document.getElementById(videoHash).appendChild(uploaderLabel);
 
     // add <br/>
     var br = document.createElement("br");
-    document.getElementById("uploader_"+movieHash).appendChild(br);
-    document.getElementById("uploader_"+movieHash).appendChild(br);
+    document.getElementById("uploader_"+videoHash).appendChild(br);
+    document.getElementById("uploader_"+videoHash).appendChild(br);
 }
 
 async function upload() {
@@ -180,13 +180,13 @@ async function upload() {
     var keywords = keywordsStr.split(",");
     const btfs = window.IpfsApi({host:ipAddr, port:ipPort, protocol:'https'});
     const Buffer = window.IpfsApi().Buffer;
-    const movieReader = new FileReader();
-    var movieHash, coverHash;
-    movieReader.onloadend = function () {
-        const buf = Buffer.from(movieReader.result);
+    const videoReader = new FileReader();
+    var videoHash, coverHash;
+    videoReader.onloadend = function () {
+        const buf = Buffer.from(videoReader.result);
         btfs.files.add(buf, (err, result) => {
             if(err) {
-                console.error(err);
+                console.log(err);
                 return
             }
             let url = `https://gateway.btfs.trongrid.io./btfs/${result[0].hash}`;
@@ -194,11 +194,11 @@ async function upload() {
             document.getElementById("url").innerHTML= url;
             document.getElementById("url").href= url;
             document.getElementById("url").target = '_blank';
-            movieHash = result[0].hash;
+            videoHash = result[0].hash;
         });
     };
-    const movie = document.getElementById("movie");
-    movieReader.readAsArrayBuffer(movie.files[0]);
+    const video = document.getElementById("video");
+    videoReader.readAsArrayBuffer(video.files[0]);
 
     const coverReader = new FileReader();
     coverReader.onloadend = function () {
@@ -216,63 +216,63 @@ async function upload() {
     const cover = document.getElementById("cover");
     coverReader.readAsArrayBuffer(cover.files[0]);
 
-    setTimeout(function () {setMovie(name, movieHash, coverHash, keywords)}, 7000);
+    setTimeout(function () {setVideo(name, videoHash, coverHash, keywords)}, 7000);
 }
 
-async function setMovie(name, movieHash, coverHash, keywords) {
-    console.log("movieHash: ",movieHash, " coverHash: ", coverHash);
-    if(name == null || movieHash == null) {
+async function setVideo(name, videoHash, coverHash, keywords) {
+    console.log("videoHash: ",videoHash, " coverHash: ", coverHash);
+    if(name == null || videoHash == null) {
         return;
     }
     contract = await window.tronWeb.contract().at(contractAddr);
-    contract.setMovie(name, movieHash, coverHash, keywords).send({
+    contract.setVideo(name, videoHash, coverHash, keywords).send({
         shouldPollResponse: true
     });
 }
 
-async function getMovies() {
+async function getVideos() {
     document.getElementById("search_result").innerHTML = "";
     var name = document.forms["searchForm"]["searchName"].value;
     contract = await window.tronWeb.contract().at(contractAddr);
-    contract.getMovies(name).call().then((movies) => {
-        if(movies["hashesByName"].length == 0 && movies["hashesByKeyword"].length == 0) {
-            document.getElementById("search_result").innerText = "no movie reference to '"+name+"'.";
+    contract.getVideos(name).call().then((videos) => {
+        if(videos["hashesByName"].length == 0 && videos["hashesByKeyword"].length == 0) {
+            document.getElementById("search_result").innerText = "no video reference to '"+name+"'.";
             return;
         }
 
-        // get movie by name.
-        for(var i = 0; i < movies["hashesByName"].length; i++) {
-            const movieHash = movies["hashesByName"][i].toString();
-            contract.getMovieInfo(movieHash).call().then((movieInfo) => {
-                const movieName = movieInfo.name.toString();
-                const thumbsUp = movieInfo.thumbsUp.toString();
-                const thumbsDown = movieInfo.thumbsDown.toString();
-                const uploader = movieInfo.uploader.toString();
-                const trxTips = movieInfo.trx_reward.toString();
-                const tokenTips = movieInfo.token_reward.toString();
-                const coverHash = movieInfo.cover_hash.toString();
-                const keywords = movieInfo.keywords.toString();
-                console.log(movieInfo.keywords, keywords);
-                setTimeout(function (){movieInfoSection(movieHash, coverHash, movieName, thumbsUp, thumbsDown, uploader,
+        // get video by name.
+        for(var i = 0; i < videos["hashesByName"].length; i++) {
+            const videoHash = videos["hashesByName"][i].toString();
+            contract.getVideoInfo(videoHash).call().then((videoInfo) => {
+                const videoName = videoInfo.name.toString();
+                const thumbsUp = videoInfo.thumbsUp.toString();
+                const thumbsDown = videoInfo.thumbsDown.toString();
+                const uploader = videoInfo.uploader.toString();
+                const trxTips = videoInfo.trx_reward.toString();
+                const tokenTips = videoInfo.token_reward.toString();
+                const coverHash = videoInfo.cover_hash.toString();
+                const keywords = videoInfo.keywords.toString();
+                console.log(videoInfo.keywords, keywords);
+                setTimeout(function (){videoInfoSection(videoHash, coverHash, videoName, thumbsUp, thumbsDown, uploader,
                     trxTips,tokenTips, keywords, contract)}, timeout);
             });
         }
 
-        // get movie by keywords.
-        for(var i = 0; i < movies["hashesByKeyword"].length; i++) {
-            const movieHash = movies["hashesByKeyword"][i].toString();
-            contract.getMovieInfo(movieHash).call().then((movieInfo) => {
-                const movieName = movieInfo.name.toString();
-                if(movieName != name) {
-                    const movieName = movieInfo.name.toString();
-                    const thumbsUp = movieInfo.thumbsUp.toString();
-                    const thumsDown = movieInfo.thumbsDown.toString();
-                    const uploader = movieInfo.uploader.toString();
-                    const trxTips = movieInfo.trx_reward.toString();
-                    const tokenTips = movieInfo.token_reward.toString();
-                    const coverHash = movieInfo.cover_hash.toString();
-                    const keywords = movieInfo.keywords.toString();
-                    setTimeout(function (){movieInfoSection(movieHash, coverHash, movieName, thumbsUp, thumsDown, uploader,
+        // get video by keywords.
+        for(var i = 0; i < videos["hashesByKeyword"].length; i++) {
+            const videoHash = videos["hashesByKeyword"][i].toString();
+            contract.getVideoInfo(videoHash).call().then((videoInfo) => {
+                const videoName = videoInfo.name.toString();
+                if(videoName != name) {
+                    const videoName = videoInfo.name.toString();
+                    const thumbsUp = videoInfo.thumbsUp.toString();
+                    const thumsDown = videoInfo.thumbsDown.toString();
+                    const uploader = videoInfo.uploader.toString();
+                    const trxTips = videoInfo.trx_reward.toString();
+                    const tokenTips = videoInfo.token_reward.toString();
+                    const coverHash = videoInfo.cover_hash.toString();
+                    const keywords = videoInfo.keywords.toString();
+                    setTimeout(function (){videoInfoSection(videoHash, coverHash, videoName, thumbsUp, thumsDown, uploader,
                         trxTips,tokenTips, keywords, contract)}, timeout);
                 }
             });
@@ -280,10 +280,10 @@ async function getMovies() {
     });
 }
 
-async function deleteMovie() {
+async function deleteVideo() {
     var hash = document.forms["deleteForm"]["deleteHash"].value;
     contract = await window.tronWeb.contract().at(contractAddr);
-    contract.deleteMovie(hash).send({
+    contract.deleteVideo(hash).send({
         shouldPollResponse: true
     });
 }
@@ -335,29 +335,29 @@ async function ownershipTransfer() {
     });
 }
 
-async function getUploadedMovies() {
+async function getUploadedVideos() {
     document.getElementById("search_result").innerHTML = "";
     contract = await window.tronWeb.contract().at(contractAddr);
-    contract.getUploadedMovies().call().then((movies) => {
-        if(movies.length == 0) {
-            document.getElementById("search_result").innerText = "You have uploaded no movies.";
+    contract.getUploadedVideos().call().then((videos) => {
+        if(videos.length == 0) {
+            document.getElementById("search_result").innerText = "You have uploaded no videos.";
             return;
         }
 
-        // get movie by name.
-        for(var i = 0; i < movies.length; i++) {
-            const movieHash = movies[i].toString();
-            contract.getMovieInfo(movieHash).call().then((movieInfo) => {
-                const movieName = movieInfo.name.toString();
-                const thumbsUp = movieInfo.thumbsUp.toString();
-                const thumbsDown = movieInfo.thumbsDown.toString();
-                const uploader = movieInfo.uploader.toString();
-                const trxTips = movieInfo.trx_reward.toString();
-                const tokenTips = movieInfo.token_reward.toString();
-                const coverHash = movieInfo.cover_hash.toString();
-                const keywords = movieInfo.keywords.toString();
-                console.log(movieInfo.keywords, keywords);
-                setTimeout(function (){movieInfoSection(movieHash, coverHash, movieName, thumbsUp, thumbsDown, uploader,
+        // get video by name.
+        for(var i = 0; i < videos.length; i++) {
+            const videoHash = videos[i].toString();
+            contract.getVideoInfo(videoHash).call().then((videoInfo) => {
+                const videoName = videoInfo.name.toString();
+                const thumbsUp = videoInfo.thumbsUp.toString();
+                const thumbsDown = videoInfo.thumbsDown.toString();
+                const uploader = videoInfo.uploader.toString();
+                const trxTips = videoInfo.trx_reward.toString();
+                const tokenTips = videoInfo.token_reward.toString();
+                const coverHash = videoInfo.cover_hash.toString();
+                const keywords = videoInfo.keywords.toString();
+                console.log(videoInfo.keywords, keywords);
+                setTimeout(function (){videoInfoSection(videoHash, coverHash, videoName, thumbsUp, thumbsDown, uploader,
                     trxTips,tokenTips, keywords, contract)}, timeout);
             });
         }

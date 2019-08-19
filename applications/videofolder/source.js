@@ -20,10 +20,10 @@ const tronLinkTimeout = 1000;
 
 
 $(window).on('load',function(){
-    var movieList = '';
+    var videoList = '';
     let path = url.path();
-    var moviesController = new MoviesController('all');
-    var appController = new AppController(path, moviesController);
+    var videosController = new VideosController('all');
+    var appController = new AppController(path, videosController);
 
     appController.load()
 
@@ -43,8 +43,8 @@ $(window).on('load',function(){
 ///////////////////////////
 // CLASSES 
 ///////////////////////////
-function Movie(movieHash, coverHash, name, thumbUps, thumbDowns, trxTip, tokenTip, keywords) {
-    this.movieHash = movieHash;
+function Video(videoHash, coverHash, name, thumbUps, thumbDowns, trxTip, tokenTip, keywords) {
+    this.videoHash = videoHash;
     this.coverHash = coverHash;
     this.name = name;
     this.thumbUps = thumbUps;
@@ -58,8 +58,8 @@ function Movie(movieHash, coverHash, name, thumbUps, thumbDowns, trxTip, tokenTi
     this.bttValueDiv ="";
 
     this.delete = () => {
-        console.log("deleting", this.movieHash)
-        deleteMovie(this.movieHash)
+        console.log("deleting", this.videoHash)
+        deleteVideo(this.videoHash)
     }
 
     this.getLikes = () => {
@@ -70,44 +70,44 @@ function Movie(movieHash, coverHash, name, thumbUps, thumbDowns, trxTip, tokenTi
     this.render = (section) => {
         let mainContainer = $(section);
 
-        var div = $('#index-movie-container-clone').clone();
+        var div = $('#index-video-container-clone').clone();
         $(mainContainer).prepend(div);
 
-        // append movie cover
-        let poster = $(div).find('.index-movie-poster');
+        // append video cover
+        let poster = $(div).find('.index-video-poster');
         let img = createElem("img", "", poster);
         img.setAttribute("src",  vars.baseURL+this.coverHash);
         $(poster).empty();
         $(poster).append(img);
 
         //download button
-        $(div).find('.index-movie-download-btn').on("click", () => {
-            watch(this.movieHash);
+        $(div).find('.index-video-download-btn').on("click", () => {
+            watch(this.videoHash);
         })
 
-        // append movie name and hash
-        let title = $(div).find('.index-movie-title');
+        // append video name and hash
+        let title = $(div).find('.index-video-title');
         $(title).html(this.name);
 
         //append thumbs up/down value
-        this.thumbUpsValue = $(div).find('.index-movie-thumbsup-value');
-        this.thumbDownsValue = $(div).find('.index-movie-thumbsdown-value');
+        this.thumbUpsValue = $(div).find('.index-video-thumbsup-value');
+        this.thumbDownsValue = $(div).find('.index-video-thumbsdown-value');
         $(this.thumbUpsValue).html(this.thumbUps);
         $(this.thumbDownsValue).html(this.thumbDowns);
 
 
         // add click event listener to thumbs 
-        $(div).find('.index-movie-thumbsup').on("click", async () => {
+        $(div).find('.index-video-thumbsup').on("click", async () => {
             if(!window.isTronLink){
                 alert('Use with TronLink chrome extension to vote');
                 return;
             }
-            console.log("click thumbs up button:", this.movieHash);
+            console.log("click thumbs up button:", this.videoHash);
             setTimeout(()=>{
                 this.updateViewLikes('up');
             }, timeout)
             contract = await tronWeb.contract().at(contractAddr);
-            let ret = await contract.thumbsUp(this.movieHash).send({
+            let ret = await contract.thumbsUp(this.videoHash).send({
                 shouldPollResponse: true
             })
             .then((ret) => {
@@ -122,17 +122,17 @@ function Movie(movieHash, coverHash, name, thumbUps, thumbDowns, trxTip, tokenTi
             })
         })
 
-        $(div).find('.index-movie-thumbsdown').on("click", async () => {
+        $(div).find('.index-video-thumbsdown').on("click", async () => {
             if(!window.isTronLink){
                 alert('Use with TronLink chrome extension to vote');
                 return
             }
-            console.log("click thumbs down button:", this.movieHash);
+            console.log("click thumbs down button:", this.videoHash);
             setTimeout(()=>{
                 this.updateViewLikes('down');
             }, timeout)
             contract = await tronWeb.contract().at(contractAddr);
-            let ret = await contract.thumbsDown(this.movieHash).send({
+            let ret = await contract.thumbsDown(this.videoHash).send({
                 shouldPollResponse: true
             })
             .then((ret) => {
@@ -148,10 +148,10 @@ function Movie(movieHash, coverHash, name, thumbUps, thumbDowns, trxTip, tokenTi
         })
 
         //append btt value
-        this.bttValueDiv = $(div).find('.index-movie-btt-value');
+        this.bttValueDiv = $(div).find('.index-video-btt-value');
         $(this.bttValueDiv).html(this.tokenTip/toSun);
-        let tipBtn = $(div).find('.index-movie-tip-btn');
-        this.tipValue = $(div).find('.index-movie-input');
+        let tipBtn = $(div).find('.index-video-tip-btn');
+        this.tipValue = $(div).find('.index-video-input');
 
 
         //tip eventListener
@@ -171,7 +171,7 @@ function Movie(movieHash, coverHash, name, thumbUps, thumbDowns, trxTip, tokenTi
                 }, timeout)
                 let tokenId = await contract.getTokenId().call();
 
-                let tips = await contract.tipToken(this.movieHash).send({
+                let tips = await contract.tipToken(this.videoHash).send({
                     tokenValue: value * toSun,
                     tokenId: tokenId,
                     shouldPollResponse: true
@@ -193,24 +193,24 @@ function Movie(movieHash, coverHash, name, thumbUps, thumbDowns, trxTip, tokenTi
 
         let mainContainer = $(section);
 
-        var div = $('#admin-movie-container-clone').clone();
-        $(div).attr('id', this.movieHash)
+        var div = $('#admin-video-container-clone').clone();
+        $(div).attr('id', this.videoHash)
         $(mainContainer).prepend(div);
 
-        // append movie cover
-        let poster = $(div).find('.admin-movie-poster');
+        // append video cover
+        let poster = $(div).find('.admin-video-poster');
         let img = createElem("img", "", poster);
         img.setAttribute("src",  vars.baseURL+this.coverHash);
         $(poster).empty();
         $(poster).append(img);
 
         //download button
-        $(div).find('.admin-movie-download-btn').on("click", () => {
+        $(div).find('.admin-video-download-btn').on("click", () => {
             this.delete();
         })
 
-        // append movie name 
-        let title = $(div).find('.admin-movie-title');
+        // append video name 
+        let title = $(div).find('.admin-video-title');
         $(title).html(this.name);
         
     }
@@ -282,8 +282,8 @@ function Movie(movieHash, coverHash, name, thumbUps, thumbDowns, trxTip, tokenTi
     }
 }
 
-function MoviesController(state){
-    this.movieList = [];
+function VideosController(state){
+    this.videoList = [];
     this.searchList = [];
     this.state = state;
 
@@ -291,7 +291,7 @@ function MoviesController(state){
     this.getList = () => {
 
         if (this.state === 'all'){
-            return this.movieList;
+            return this.videoList;
         }
 
         if(this.state === 'search'){
@@ -299,14 +299,14 @@ function MoviesController(state){
         }
 
 
-        let list = this.movieList.find((element) => {
+        let list = this.videoList.find((element) => {
             return element.name === this.state
         })
         return [list]
     }
 
     this.push = (section) => {
-        this.movieList.push(section)
+        this.videoList.push(section)
     }
 
     this.updateSearchList = (section) => {
@@ -319,7 +319,7 @@ function MoviesController(state){
 
 }
 
-function AppController(path, moviesController){
+function AppController(path, videosController){
     this.isAuth = false;
     this.isTronLink = false;
     this.path = path;
@@ -333,29 +333,29 @@ function AppController(path, moviesController){
             case "admin.html":
                 break;
             case "":
-                loadEventsListeners.index(moviesController);
-                getAllMovies().then((list) => {
-                    moviesController.push({name:'Ranked', list:list});
-                    moviesController.push({name:'Featured', list:list});
-                    moviesController.push({name:'New', list:list});
+                loadEventsListeners.index(videosController);
+                getAllVideos().then((list) => {
+                    videosController.push({name:'Ranked', list:list});
+                    videosController.push({name:'Featured', list:list});
+                    videosController.push({name:'New', list:list});
 
-                    movieList = moviesController.getList();
+                    videoList = videosController.getList();
 
-                    renderMovieSections(moviesController, 'see more')
-                    renderMovies(moviesController, false)
+                    renderVideoSections(videosController, 'see more')
+                    renderVideos(videosController, false)
                 })
                 break;
             case "index.html":
-                loadEventsListeners.index(moviesController);
-                getAllMovies().then((list) => {
-                    moviesController.push({name:'Ranked', list:list});
-                    moviesController.push({name:'Featured', list:list});
-                    moviesController.push({name:'New', list:list});
+                loadEventsListeners.index(videosController);
+                getAllVideos().then((list) => {
+                    videosController.push({name:'Ranked', list:list});
+                    videosController.push({name:'Featured', list:list});
+                    videosController.push({name:'New', list:list});
 
-                    movieList = moviesController.getList();
+                    videoList = videosController.getList();
 
-                    renderMovieSections(moviesController, 'see more')
-                    renderMovies(moviesController, false)
+                    renderVideoSections(videosController, 'see more')
+                    renderVideos(videosController, false)
                 })
                 break;
         }
@@ -382,12 +382,12 @@ function AppController(path, moviesController){
                     loadEventsListeners.auth();
                     $('#popup-container').fadeOut();
 
-                    var movieList = [];
-                    getUploadedMovies().then((list) => {
+                    var videoList = [];
+                    getUploadedVideos().then((list) => {
 
-                        moviesController.updateState('search');
-                        moviesController.updateSearchList({name:'uploaded', list:list});
-                        renderMovies(moviesController, true)
+                        videosController.updateState('search');
+                        videosController.updateSearchList({name:'uploaded', list:list});
+                        renderVideos(videosController, true)
                     })
                 }else{
                     //page redirect 
@@ -486,42 +486,42 @@ function loadDocument(doc){
     img.setAttribute('height',height)
 }
 
-function parseMovieInfo(movieInfo) {
+function parseVideoInfo(videoInfo) {
     return {
-        movieHash: movieInfo.movieHash.toString(),
-        movieName: movieInfo.name.toString(),
-        thumbsUp: movieInfo.thumbsUp.toString(),
-        thumbsDown: movieInfo.thumbsDown.toString(),
-        uploader: movieInfo.uploader.toString(),
-        trxTips: movieInfo.trx_reward.toString(),
-        tokenTips: movieInfo.token_reward.toString(),
-        coverHash: movieInfo.cover_hash.toString(),
-        keywords: movieInfo.keywords.toString(),
-        popularity: parseInt(movieInfo.thumbsUp.toString()) / (parseInt(movieInfo.thumbsUp.toString())+parseInt(movieInfo.thumbsDown.toString())) || 0
+        videoHash: videoInfo.videoHash.toString(),
+        videoName: videoInfo.name.toString(),
+        thumbsUp: videoInfo.thumbsUp.toString(),
+        thumbsDown: videoInfo.thumbsDown.toString(),
+        uploader: videoInfo.uploader.toString(),
+        trxTips: videoInfo.trx_reward.toString(),
+        tokenTips: videoInfo.token_reward.toString(),
+        coverHash: videoInfo.cover_hash.toString(),
+        keywords: videoInfo.keywords.toString(),
+        popularity: parseInt(videoInfo.thumbsUp.toString()) / (parseInt(videoInfo.thumbsUp.toString())+parseInt(videoInfo.thumbsDown.toString())) || 0
     }
 }
 
-function renderMovies(moviesController, loadAll) {
+function renderVideos(videosController, loadAll) {
 
-    let movieList = moviesController.getList();
+    let videoList = videosController.getList();
 
-    for(let i = 0 ; i < movieList.length; i++){
+    for(let i = 0 ; i < videoList.length; i++){
 
-        if(movieList[i].list){
-            let num = (loadAll) ? 0 : movieList[i].list.length  - 5;
+        if(videoList[i].list){
+            let num = (loadAll) ? 0 : videoList[i].list.length  - 5;
             if(num < 0){ num = 0}
-            for(let j = num ; j < movieList[i].list.length ; j++){
-                let id = '#' + movieList[i].name;
-                let movie = movieList[i].list[j];
-                let movieObj = new Movie(movie.movieHash, movie.coverHash, movie.movieName, movie.thumbsUp, movie.thumbsDown, movie.trxTips, movie.tokenTips, '');
+            for(let j = num ; j < videoList[i].list.length ; j++){
+                let id = '#' + videoList[i].name;
+                let video = videoList[i].list[j];
+                let videoObj = new Video(video.videoHash, video.coverHash, video.videoName, video.thumbsUp, video.thumbsDown, video.trxTips, video.tokenTips, '');
                 id = id.replace(/ /g,"_")
                 switch(id){
                     case '#uploaded':
-                        movieObj.renderAdmin(id);
+                        videoObj.renderAdmin(id);
                         break;
                     default :
 
-                        movieObj.render(id); 
+                        videoObj.render(id); 
                         break;
                 }
             }
@@ -530,39 +530,39 @@ function renderMovies(moviesController, loadAll) {
 
 }
 
-function renderMovieSections(moviesController, subheader){
+function renderVideoSections(videosController, subheader){
 
     let main = $('#main-container')
     main.empty();
 
-    movieList = moviesController.getList();
+    videoList = videosController.getList();
 
-    for (let i = 0; i < movieList.length; i++){
+    for (let i = 0; i < videoList.length; i++){
 
         let sectionHeader = createElem('div', 'section-header', main);
         let sectionTitle = createElem('span', 'section-title', sectionHeader);
         let sectionSeeMore = createElem('div', 'section-see-more', sectionHeader);
         let section = createElem('div', 'section-container', main);
-        let id = movieList[i].name.replace(/ /g,"_");
+        let id = videoList[i].name.replace(/ /g,"_");
 
-        $(sectionTitle).html(movieList[i].name);
+        $(sectionTitle).html(videoList[i].name);
         $(sectionSeeMore).html(subheader);
         $(section).attr('id', id);
 
         $(sectionSeeMore).click(() => {
             if($(sectionSeeMore).html() === "back"){
 
-                moviesController.updateState('all')
-                renderMovieSections(moviesController, 'see more')
-                renderMovies(moviesController, false)
+                videosController.updateState('all')
+                renderVideoSections(videosController, 'see more')
+                renderVideos(videosController, false)
 
 
             }
             else{
 
-                moviesController.updateState(movieList[i].name)
-                renderMovieSections(moviesController, 'back')
-                renderMovies(moviesController, true)
+                videosController.updateState(videoList[i].name)
+                renderVideoSections(videosController, 'back')
+                renderVideos(videosController, true)
             }
 
         })
@@ -610,21 +610,21 @@ let loader = {
 
 let loadEventsListeners = {
     upload:() => {
-        //movie file event listeners
-        let movie = $('#movie');
-        let movieTxt = $('#movie-input')
-        $('#movie-browse').on('click', ()=> {
-            $(movie).click()
+        //video file event listeners
+        let video = $('#video');
+        let videoTxt = $('#video-input')
+        $('#video-browse').on('click', ()=> {
+            $(video).click()
         })
-        $(movie).on('change', () => {
-          const name = $(movie).val().split(/\\|\//).pop();
+        $(video).on('change', () => {
+          const name = $(video).val().split(/\\|\//).pop();
           const truncated = name.length > 20 
             ? name.substr(name.length - 20) 
             : name;
-          movieTxt.html(truncated);
+          videoTxt.html(truncated);
         });
 
-        //movie cover event listeners
+        //video cover event listeners
         let cover = $('#cover');
         let coverTxt = $('#cover-input')
         $('#cover-browse').on('click', ()=> {
@@ -642,7 +642,7 @@ let loadEventsListeners = {
 
         uploadBtn.click(() => {
 
-            if(($(movie).val() !== "") && ($(cover).val() !== "")){
+            if(($(video).val() !== "") && ($(cover).val() !== "")){
                 upload();
                 loader.create(uploadBtn, ['connecting to network','traversing nodes','signing contract', 'uploading files'], ()=>{})
 
@@ -650,7 +650,7 @@ let loadEventsListeners = {
             else{
                 alert('fill required fields')
             }
-            console.log($(movie).val(), $(cover).val())
+            console.log($(video).val(), $(cover).val())
         })
     },
     auth: () => {
@@ -682,7 +682,7 @@ let loadEventsListeners = {
 
 
     },
-    index: (moviesController) => {
+    index: (videosController) => {
         //search on click event
         $('#search-btn').on('click',function(){
             let searchTerm = $("#searchName").val();
@@ -690,13 +690,13 @@ let loadEventsListeners = {
             
             if (searchTerm !== ""){
 
-                let movieList = [];
-                getMovies(searchTerm).then((list) => {
+                let videoList = [];
+                getVideos(searchTerm).then((list) => {
 
-                    moviesController.updateState('search');
-                    moviesController.updateSearchList({name:searchTerm, list:list})
-                    renderMovieSections(moviesController, 'back')
-                    renderMovies(moviesController, true)
+                    videosController.updateState('search');
+                    videosController.updateSearchList({name:searchTerm, list:list})
+                    renderVideoSections(videosController, 'back')
+                    renderVideos(videosController, true)
                 })
             }
 
@@ -711,13 +711,13 @@ let loadEventsListeners = {
                 
                 if (searchTerm !== ""){
 
-                    let movieList = [];
-                    getMovies(searchTerm).then((list) => {
+                    let videoList = [];
+                    getVideos(searchTerm).then((list) => {
 
-                        moviesController.updateState('search');
-                        moviesController.updateSearchList({name:searchTerm, list:list})
-                        renderMovieSections(moviesController, 'back')
-                        renderMovies(moviesController, true)
+                        videosController.updateState('search');
+                        videosController.updateSearchList({name:searchTerm, list:list})
+                        renderVideoSections(videosController, 'back')
+                        renderVideos(videosController, true)
                     })
                 }
             }
@@ -817,9 +817,9 @@ async function authCheck(tronWeb){
     //authorized if admin || owner
 }
 
-async function deleteMovie(hash) {
+async function deleteVideo(hash) {
     contract = await tronWeb.contract().at(contractAddr);
-    contract.deleteMovie(hash).send({
+    contract.deleteVideo(hash).send({
         shouldPollResponse: true
     }).then(()=>{
         console.log('deleted ',hash)
@@ -828,91 +828,91 @@ async function deleteMovie(hash) {
     })
     .catch((e) => {
         console.log(e)
-        buttonRevert('.popup-movie-delete', "Delete");
+        buttonRevert('.popup-video-delete', "Delete");
     })
 }
 
-async function getAllMovies() {
+async function getAllVideos() {
     contract = await tronWeb.contract().at(contractAddr);
-    let movies = await contract.getAllMovies().call();
+    let videos = await contract.getAllVideos().call();
 
-    var movieQueue = new TinyQueue([], function (a, b) {
+    var videoQueue = new TinyQueue([], function (a, b) {
         return a.popularity - b.popularity;
     });
 
-    for( i = 0; i < movies.length; i++) {
-        const movieHash = movies[i].toString();
-        let movieInfo = await contract.getMovieInfo(movieHash).call();
-        movieInfo.movieHash = movieHash;
-        let parsedMovie = parseMovieInfo(movieInfo);
-        movieQueue.push(parsedMovie);
+    for( i = 0; i < videos.length; i++) {
+        const videoHash = videos[i].toString();
+        let videoInfo = await contract.getVideoInfo(videoHash).call();
+        videoInfo.videoHash = videoHash;
+        let parsedVideo = parseVideoInfo(videoInfo);
+        videoQueue.push(parsedVideo);
     }
 
     var array = [];
-    while (movieQueue.length) array.push(movieQueue.pop());
+    while (videoQueue.length) array.push(videoQueue.pop());
     return array;
 }
 
-async function getMovies(name) {
+async function getVideos(name) {
 
     let main = $('#main-container').empty();
 
     let searchDiv = createElem('div', 'section-container wrap', main);
-    $(searchDiv).attr('id', 'movie-search');
+    $(searchDiv).attr('id', 'video-search');
     
     contract = await tronWeb.contract().at(contractAddr);
-    let movies = await contract.getMovies(name).call();
+    let videos = await contract.getVideos(name).call();
 
-    if(movies["hashesByName"].length == 0 && movies["hashesByKeyword"].length == 0) {
+    if(videos["hashesByName"].length == 0 && videos["hashesByKeyword"].length == 0) {
         return;
     }
 
-    // remove duplicated movies
-    var movieList = movies["hashesByName"].concat(movies["hashesByKeyword"]);
-    var uniqueMovieList = movieList.filter((item,index) => movieList.indexOf(item) === index)
+    // remove duplicated videos
+    var videoList = videos["hashesByName"].concat(videos["hashesByKeyword"]);
+    var uniqueVideoList = videoList.filter((item,index) => videoList.indexOf(item) === index)
 
-    var movieQueue = new TinyQueue([], function (a, b) {
+    var videoQueue = new TinyQueue([], function (a, b) {
         return a.popularity - b.popularity;
     });
 
-    for( i = 0; i < uniqueMovieList.length; i++) {
-        const movieHash = uniqueMovieList[i].toString();
-        let movieInfo = await contract.getMovieInfo(movieHash).call();
-        movieInfo.movieHash = movieHash;
-        let parsedMovie = parseMovieInfo(movieInfo);
-        movieQueue.push(parsedMovie);
+    for( i = 0; i < uniqueVideoList.length; i++) {
+        const videoHash = uniqueVideoList[i].toString();
+        let videoInfo = await contract.getVideoInfo(videoHash).call();
+        videoInfo.videoHash = videoHash;
+        let parsedVideo = parseVideoInfo(videoInfo);
+        videoQueue.push(parsedVideo);
     }
 
     var array = [];
-    while (movieQueue.length) array.push(movieQueue.pop());
+    while (videoQueue.length) array.push(videoQueue.pop());
     return array;
 
 }
 
-async function getUploadedMovies() {
+async function getUploadedVideos() {
     let path = url.path()
     let page = (path === "") ? "index" : "admin";
     contract = await tronWeb.contract().at(contractAddr);
-    let movies = await contract.getUploadedMovies().call();
-    if(movies.length == 0) {
-        document.getElementById("main-container").innerText = "You have uploaded no movies.";
+    let videos = await contract.getUploadedVideos().call();
+    if(videos.length == 0) {
+        document.getElementById("main-container").innerText = "You have uploaded no videos.";
         return;
     }
 
-    var movieQueue = new TinyQueue([], function (a, b) {
+    var videoQueue = new TinyQueue([], function (a, b) {
         return a.popularity - b.popularity;
     });
 
-    for( i = 0; i < movies.length; i++) {
-        const movieHash = movies[i].toString();
-        let movieInfo = await contract.getMovieInfo(movieHash).call();
-        movieInfo.movieHash = movieHash;
-        let parsedMovie = parseMovieInfo(movieInfo);
-        movieQueue.push(parsedMovie);
+    for( i = 0; i < videos.length; i++) {
+        const videoHash = videos[i].toString();
+        let videoInfo = await contract.getVideoInfo(videoHash).call();
+        videoInfo.videoHash = videoHash;
+        let parsedVideo = parseVideoInfo(videoInfo);
+        videoQueue.push(parsedVideo);
     }
 
     var array = [];
-    while (movieQueue.length) array.push(movieQueue.pop());
+    while (videoQueue.length) array.push(videoQueue.pop());
     return array;
 }
 
@@ -929,22 +929,22 @@ async function removeKeywords() {
 
 async function upload() {
     var name = document.forms["uploadForm"]["uploadName"].value;
-    var movie = document.getElementById("movie");
+    var video = document.getElementById("video");
     var cover = document.getElementById("cover");
-    var movieHash, coverHash;
+    var videoHash, coverHash;
 
-    if (movie.files.length > 0 && cover.files.length > 0) {
+    if (video.files.length > 0 && cover.files.length > 0) {
 
-        var moviePromise = new Promise(function(resolve,reject) {
-            ipfsClient.add(movie.files[0], (err, result) => {
+        var videoPromise = new Promise(function(resolve,reject) {
+            ipfsClient.add(video.files[0], (err, result) => {
                     if(err) {
                         console.error(err);
                         return
                     }
                     let url = vars.baseURL+result[0].hash;
                     console.log(`Url --> ${url}`);
-                    movieHash = result[0].hash;
-                    resolve(movieHash)
+                    videoHash = result[0].hash;
+                    resolve(videoHash)
                 });
 
             })
@@ -963,17 +963,17 @@ async function upload() {
                 });
             })
 
-        Promise.all([moviePromise,coverPromise]).then((values)=>{
-            console.log(values) // [movieHash,coverHash]
-            setMovie(name, values[0], values[1])
+        Promise.all([videoPromise,coverPromise]).then((values)=>{
+            console.log(values) // [videoHash,coverHash]
+            setVideo(name, values[0], values[1])
         })
 
     }
 }
 
-async function setMovie(name, movieHash, coverHash) {
-    console.log("movieHash: ",movieHash, " coverHash: ", coverHash);
-    if(name == null || movieHash == null) {
+async function setVideo(name, videoHash, coverHash) {
+    console.log("videoHash: ",videoHash, " coverHash: ", coverHash);
+    if(name == null || videoHash == null) {
         return;
     }
     contract = await tronWeb.contract().at(contractAddr)
@@ -981,7 +981,7 @@ async function setMovie(name, movieHash, coverHash) {
     keywordsStr = keywordsStr.replace(/\s+/g,"");
     var keywords = keywordsStr.split(",");
     console.log(keywords)
-    contract.setMovie(name, movieHash, coverHash, keywords).send({
+    contract.setVideo(name, videoHash, coverHash, keywords).send({
         shouldPollResponse: true
     })
     .then(() => {

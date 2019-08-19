@@ -275,7 +275,7 @@ input[type="file"] {
 .hidden{
 	display:none;
 }
-.index-movie-container{
+.index-video-container{
 	margin:30px;
 	width: 230px;
 	height:323px;
@@ -283,11 +283,11 @@ input[type="file"] {
 	grid-template-rows: 38px 20px 30px 38px 30px 30px 20px 20px 20px 20px 30px 10px 16px;
 	grid-template-columns: 30px 30px 30px 30px 30px 20px 60px;
 }
-.index-movie-poster{
+.index-video-poster{
 	grid-column:1 / 6;
 	grid-row: 1 / 8;
 }
-.index-movie-download-bg{
+.index-video-download-bg{
 	grid-column:1 / 6;
 	grid-row: 1 / 8;
 	background-color: rgba(0,0,0,0.7);
@@ -298,10 +298,10 @@ input[type="file"] {
 	justify-content: center;
 	align-items: center;
 }
-.index-movie-download-bg:hover{
+.index-video-download-bg:hover{
 	opacity: 1;
 }
-.index-movie-download-btn{
+.index-video-download-btn{
 	width: 80%;
 	height: 18px;
 	padding: 8px;
@@ -318,11 +318,11 @@ input[type="file"] {
 	box-shadow: 0px 10px 25px -12px rgba(0,0,0,0.75);
 	
 }
-.index-movie-poster img{
+.index-video-poster img{
 	height:100%;
 	width: 100%;
 }
-.index-movie-title{
+.index-video-title{
 	grid-column:1 / 6;
 	grid-row: 9 / 10;
 	text-align: center;
@@ -332,27 +332,27 @@ input[type="file"] {
 	display: flex;
 	justify-content: center;
 }
-.index-movie-thumbsup{
+.index-video-thumbsup{
 	grid-column:2 / 3;
 	grid-row: 11 / 12;
 }
-.index-movie-thumbsdown{
+.index-video-thumbsdown{
 	grid-column: 4 / 5;
 	grid-row: 11 / 12;
 }
-.index-movie-thumbsup-value{
+.index-video-thumbsup-value{
 	grid-column:2 / 3;
 	grid-row: 13 / 14;
 	text-align: center;
 	color:gray; 
 }
-.index-movie-thumbsdown-value{
+.index-video-thumbsdown-value{
 	grid-column: 4 / 5;
 	grid-row: 13 / 14;
 	text-align: center;
 	color:gray;
 }
-.index-movie-tip-btn{
+.index-video-tip-btn{
 	grid-column: 7/8;
 	grid-row: 1/2;
 	padding: 8px;
@@ -379,19 +379,19 @@ input[type="file"] {
 .hover-button2:hover{
 	opacity:0.8;
 }
-.index-movie-tip-value{
+.index-video-tip-value{
 	grid-column: 7/8;
 	grid-row: 3/4;
 	text-align:center;
 	background-color: #c3c3c3;
 }
-.index-movie-btt-value{
+.index-video-btt-value{
 	grid-column: 7/8;
 	grid-row: 5/6;
 	text-align:center;
 	line-height:30px;
 }
-.index-movie-btt{
+.index-video-btt{
 	grid-column: 7/8;
 	grid-row: 6/7;
 	font-weight:bold;
@@ -399,13 +399,13 @@ input[type="file"] {
 	font-size:18px;
 	line-height: 30px;
 }
-.index-movie-input{
+.index-video-input{
 	width: 60px;
 	line-height: 30px;
 	font-size: 16px;
 }
 
-.admin-movie-container{
+.admin-video-container{
 	margin:30px;
 	width: 205px;
 	height:323px;
@@ -413,11 +413,11 @@ input[type="file"] {
 	grid-template-rows: 38px 20px 30px 38px 30px 30px 20px 20px 20px 20px 30px 10px 16px;
 	grid-template-columns: 30px 30px 30px 30px 30px;
 }
-.admin-movie-poster{
+.admin-video-poster{
 	grid-column:1 / 6;
 	grid-row: 1 / 8;
 }
-.admin-movie-download-bg{
+.admin-video-download-bg{
 	grid-column:1 / 6;
 	grid-row: 1 / 8;
 	background-color: rgba(0,0,0,0.7);
@@ -428,10 +428,10 @@ input[type="file"] {
 	justify-content: center;
 	align-items: center;
 }
-.admin-movie-download-bg:hover{
+.admin-video-download-bg:hover{
 	opacity: 1;
 }
-.admin-movie-download-btn{
+.admin-video-download-btn{
 	width: 80%;
 	height: 18px;
 	padding: 8px;
@@ -448,11 +448,11 @@ input[type="file"] {
 	box-shadow: 0px 10px 25px -12px rgba(0,0,0,0.75);
 	
 }
-.admin-movie-poster img{
+.admin-video-poster img{
 	height:100%;
 	width: 100%;
 }
-.admin-movie-title{
+.admin-video-title{
 	grid-column:1 / 6;
 	grid-row: 9 / 10;
 	text-align: center;

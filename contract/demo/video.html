@@ -5,15 +5,15 @@
     <script src="https://unpkg.com/ipfs-api@9.0.0/dist/index.js"
             integrity="sha384-5bXRcW9kyxxnSMbOoHzraqa7Z0PQWIao+cgeg327zit1hz5LZCEbIMx/LWKPReuB"
             crossorigin="anonymous"></script>
-    <title>BTFS-Movie</title>
+    <title>BTFS-Video</title>
 </head>
 <body>
 
 <form name="uploadForm" action="/">
     <fieldset>
-        <legend>Upload movie</legend>
+        <legend>Upload video</legend>
         Name:<input type="text" name="upload_name" id="uploadName">
-        Movie:<input type="file" name="movie" id="movie">
+        Video:<input type="file" name="video" id="video">
         Cover:<input type="file" name="cover" id="cover">
         Keywords(split by ","):<input type="text" name="upload_keywords" id="uploadKeywords">
         <button type="button" id="uploadButton" onclick="upload()">Upload</button>
@@ -23,16 +23,16 @@
 
 <form name="deleteForm" action="/">
     <fieldset>
-        <legend>Delete movie</legend>
+        <legend>Delete video</legend>
         Hash:<input type="text" name="delete_hash" id="deleteHash">
-        <button type="button" id="deleteMovieButton" onclick="deleteMovie()">Delete</button>
+        <button type="button" id="deleteVideoButton" onclick="deleteVideo()">Delete</button>
     </fieldset>
 </form>
 
 <form name="addKeywordsForm" action="/">
     <fieldset>
         <legend>Add keywords</legend>
-        Hash:<input type="text" name="movie_hash" id="addHash">
+        Hash:<input type="text" name="video_hash" id="addHash">
         Keywords(split by ","):<input type="text" name="keywords" id="keywords">
         <button type="button" id="addKeywordsButton" onclick="addKeywords()">Add</button>
     </fieldset>
@@ -41,7 +41,7 @@
 <form name="removeKeywordsForm" action="/">
     <fieldset>
         <legend>Remove keywords</legend>
-        Hash:<input type="text" name="movie_hash" id="removeHash">
+        Hash:<input type="text" name="video_hash" id="removeHash">
         Keyword(split by ","):<input type="text" name="keywords" id="keywords">
         <button type="button" id="removeKeywordsButton" onclick="removeKeywords()">Remove</button>
     </fieldset>
@@ -67,18 +67,18 @@
 
 <form name="searchForm" action="/">
     <fieldset>
-        <legend>Search movie</legend>
+        <legend>Search video</legend>
         Name:<input type="text" name="search_name" id="searchName">
-        <button type="button" id="searchButton" onclick="getMovies()">Search By name&keywords</button>
+        <button type="button" id="searchButton" onclick="getVideos()">Search By name&keywords</button>
         </br>
-        <button type="button" id="getUploadedButton" onclick="getUploadedMovies()">Get Uploaded Movies</button>
+        <button type="button" id="getUploadedButton" onclick="getUploadedVideos()">Get Uploaded Videos</button>
     </fieldset>
 </form>
 </br>
 
 <div id="search_result"> </div>
 
-<script type="text/javascript" src="movie.js?2019.06.03.v2"> </script>
+<script type="text/javascript" src="video.js?2019.06.03.v"> </script>
 
 </body>
 </html>
