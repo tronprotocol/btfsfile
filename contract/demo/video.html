@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" >
+    <script src="https://unpkg.com/ipfs-api@9.0.0/dist/index.js"
+            integrity="sha384-5bXRcW9kyxxnSMbOoHzraqa7Z0PQWIao+cgeg327zit1hz5LZCEbIMx/LWKPReuB"
+            crossorigin="anonymous"></script>
+    <title>BTFS-Video</title>
+</head>
+<body>
+
+<form name="uploadForm" action="/">
+    <fieldset>
+        <legend>Upload video</legend>
+        Name:<input type="text" name="upload_name" id="uploadName">
+        Video:<input type="file" name="video" id="video">
+        Cover:<input type="file" name="cover" id="cover">
+        Keywords(split by ","):<input type="text" name="upload_keywords" id="uploadKeywords">
+        <button type="button" id="uploadButton" onclick="upload()">Upload</button>
+        <a id="url"></a>
+    </fieldset>
+</form>
+
+<form name="deleteForm" action="/">
+    <fieldset>
+        <legend>Delete video</legend>
+        Hash:<input type="text" name="delete_hash" id="deleteHash">
+        <button type="button" id="deleteVideoButton" onclick="deleteVideo()">Delete</button>
+    </fieldset>
+</form>
+
+<form name="addKeywordsForm" action="/">
+    <fieldset>
+        <legend>Add keywords</legend>
+        Hash:<input type="text" name="video_hash" id="addHash">
+        Keywords(split by ","):<input type="text" name="keywords" id="keywords">
+        <button type="button" id="addKeywordsButton" onclick="addKeywords()">Add</button>
+    </fieldset>
+</form>
+
+<form name="removeKeywordsForm" action="/">
+    <fieldset>
+        <legend>Remove keywords</legend>
+        Hash:<input type="text" name="video_hash" id="removeHash">
+        Keyword(split by ","):<input type="text" name="keywords" id="keywords">
+        <button type="button" id="removeKeywordsButton" onclick="removeKeywords()">Remove</button>
+    </fieldset>
+</form>
+
+<form name="administrative" action="/">
+    <fieldset>
+        <legend>Administrative</legend>
+        Address:<input type="text" name="add_admin" id="addAddr">
+        <button type="button" id="addAdminButton" onclick="addAdmin()">Add Admin</button>
+        Address:<input type="text" name="delete_admin" id="deleteAddr">
+        <button type="button" id="deleteAdminButton" onclick="deleteAdmin()">Delete Admin</button>
+        Address:<input type="text" name="ownership_Transfer" id="newOwnerAddr">
+        <button type="button" id="ownershipButton" onclick="ownershipTransfer()">Transfer OwnerShip</button>
+        </br>
+        New fee percent:<input type="text" name="fee_percent" id="newFeePercent">
+        <button type="button" id="feePercentButton" onclick="changeFeePercent()">Change Fee Percent</button>
+        </br>
+        New Token Id:<input type="text" name="token_id" id="newTokenId">
+        <button type="button" id="tokenIdButton" onclick="changeTokenId()">Change Token Id</button>
+    </fieldset>
+</form>
+
+<form name="searchForm" action="/">
+    <fieldset>
+        <legend>Search video</legend>
+        Name:<input type="text" name="search_name" id="searchName">
+        <button type="button" id="searchButton" onclick="getVideos()">Search By name&keywords</button>
+        </br>
+        <button type="button" id="getUploadedButton" onclick="getUploadedVideos()">Get Uploaded Videos</button>
+    </fieldset>
+</form>
+</br>
+
+<div id="search_result"> </div>
+
+<script type="text/javascript" src="video.js?2019.06.06.v1"> </script>
+
+</body>
+</html>
