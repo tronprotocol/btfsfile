@@ -1,4 +1,4 @@
-const ipAddr = "api.btfs.trongrid.io";
+const ipAddr = "api.btfssoter.io";
 const ipPort = "443";
 const timeout = 1000;
 const contractAddr = "TMFoVTsfJfJpJ9WhBGz1d5VMCW6C2cJNgp";
@@ -16,8 +16,8 @@ async function videoInfoSection(videoHash, coverHash, name, thumbsUp, thumbsDown
 
     // append video cover
     var cover = document.createElement("img");
-    console.log("https://gateway.btfs.trongrid.io/btfs/"+coverHash);
-    cover.setAttribute("src",  "https://gateway.btfs.trongrid.io/btfs/"+coverHash);
+    console.log("https://gateway.btfssoter.io/btfs/"+coverHash);
+    cover.setAttribute("src",  "https://gateway.btfssoter.io/btfs/"+coverHash);
     cover.setAttribute("width", 450);
     document.getElementById(videoHash).appendChild(cover);
 
@@ -189,7 +189,7 @@ async function upload() {
                 console.log(err);
                 return
             }
-            let url = `https://gateway.btfs.trongrid.io./btfs/${result[0].hash}`;
+            let url = `https://gateway.btfssoter.io./btfs/${result[0].hash}`;
             console.log(`Url --> ${url}`);
             document.getElementById("url").innerHTML= url;
             document.getElementById("url").href= url;
@@ -208,7 +208,7 @@ async function upload() {
                 console.error(err);
                 return
             }
-            let url = `https://gateway.btfs.trongrid.io./btfs/${result[0].hash}`;
+            let url = `https://gateway.btfssoter.io./btfs/${result[0].hash}`;
             console.log(`Url --> ${url}`);
             coverHash = result[0].hash;
         });
@@ -381,6 +381,6 @@ async function changeTokenId() {
 }
 
 function watch(hash) {
-    let url = `https://gateway.btfs.trongrid.io./btfs/${hash}`;
+    let url = `https://gateway.btfssoter.io./btfs/${hash}`;
     window.location.href=url;
 }

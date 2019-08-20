@@ -1,7 +1,7 @@
 {
-	"contractAddr" : "TPHtow3ZP77yaHKzQKSKn6GHLAXHPGtp5D",
+	"contractAddr" : "TMFoVTsfJfJpJ9WhBGz1d5VMCW6C2cJNgp",
 	"defaultUserAddr" :"TNNz2S2wzPxvokEWAiT3gE48RFuhnaPYEy",
-	"nodeURL" : "https://api.trongrid.io",
+	"nodeURL" : "https://api.shasta.trongrid.io",
 	"hostIpAddr" : "api.btfssoter.io",
 	"tipConversion" : "0.8",
 	"baseURL" : "https://gateway.btfssoter.io./btfs/"
